@@ -1,0 +1,66 @@
+//
+//  WelcomeViewController.swift
+//  TestApplication
+//
+//  Created by Amanjot Karir on 02/04/2017.
+//  Copyright © 2017 AppCoda. All rights reserved.
+//
+
+import UIKit
+import AVFoundation   //imports the different frameworks
+import AVKit
+
+class WelcomeViewController: UIViewController {
+    
+    var avPlayer: AVPlayer! 
+    var avPlayerLayer: AVPlayerLayer!  //Both avPlayer var's and the paused var are for the background animation
+    var paused: Bool = false           //The paused variable is set to false
+    
+    
+    @IBOutlet weak var ContinueButton: UIButton! //In my test application I have a button that allows you to go to the 
+                                                 //next screen
+        
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let theURL = Bundle.main.url(forResource: "Backgroundwallpaper", withExtension: "mp4") 
+        //This is where you declare your video. If you haven't already, drag and drop the video into xcode. Simply rename
+        //Backgroundwallpaper with what your video is called.
+              
+        avPlayer = AVPlayer(url: theURL!)
+        avPlayerLayer = AVPlayerLayer(player: avPlayer)
+        avPlayerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+        view.layer.addSublayer(avPlayerLayer)
+        avPlayer.play()
+        avPlayer.volume = 6                                                 //constraints for the video that will be playing
+        avPlayer.actionAtItemEnd = AVPlayerActionAtItemEnd.none
+        
+        avPlayerLayer.frame = view.layer.bounds
+        view.backgroundColor = UIColor.clear;
+        view.layer.insertSublayer(avPlayerLayer, at: 0)
+        
+    }
+    
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        avPlayer.pause()
+        paused = true                   
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        avPlayer.play()         
+        paused = false
+        UIView.animate(withDuration: 4.0, delay: 15.0,
+                       options: [],
+                       animations: {
+                        self.ContinueButton.alpha = 9.0           //As I have a button on this page, this sets the animation
+        }, completion: nil)                                       //for my button. This lets the button fade in when the 
+                                                                  //video in the background ends. 
+    }
+    override func viewWillAppear(_ animated: Bool){
+        ContinueButton.alpha = 0.0
+        
+    }
+    
+}
