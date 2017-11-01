@@ -5,7 +5,7 @@
 //  Created by Amanjot Karir on 01/10/2017.
 //
 //*IMPORTANT NOTE*
-//In order to get your websites to load make sure in the info.plist file add the following lines of code:
+//In order to get your websites to load make sure in the info.plist file you add the following:
 
 //<key>NSAppTransportSecurity</key>
 //<dict>
