@@ -1,0 +1,47 @@
+//
+//  GithubViewController.swift
+//  TestApplication
+//
+//  Created by Amanjot Karir on 01/10/2017.
+//
+//*IMPORTANT NOTE*
+//In order to get your websites to load makesure in the info.plist file add the following lines of code:
+
+//<key>NSAppTransportSecurity</key>
+//<dict>
+//		<key>NSAllowsArbitraryLoads</key>
+//	  <true/>
+//
+
+import UIKit
+import WebKit   //Import the frameworks
+
+class GithubViewController: UIViewController, WKUIDelegate {
+    
+    
+    @IBOutlet var webView : WKWebView!    //This is linked to the webview in the storyboard 
+    
+    
+    override func loadView() {
+        super.loadView()
+        
+        let config = WKWebViewConfiguration()
+        webView = WKWebView(frame: self.view.frame, configuration: config)
+        self.webView!.uiDelegate = self
+        
+        //load URL here
+        let url = NSURL(string: "https://github.com")!  //Replace the URL with the website you want
+        webView.load(URLRequest(url: url as URL))
+        self.view.addSubview(webView)
+    }
+    
+    @IBAction func goBack(_ sender: Any) {
+        webView.goBack()        //On the page I have my webview, I also put 2 buttons so that you can navigate between pages
+    }                           //goBack will take you to the previous webpage, and goForward will take you forward a page.
+    
+    @IBAction func goForward(_ sender: Any) {
+        webView.goForward()
+    }
+    
+}
+
